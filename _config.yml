@@ -1,11 +1,11 @@
 # Site settings
 title: Welcome O.o
-SEOTitle: Yun Blog
+SEOTitle: Yun| Hux Blog
 header-img: img/fujimountain.jpg
 email: jjdzbb0826@gmail.com
-description: ""
+description: "八号风球"
 keyword: "@jjdzbb, JavaScript, React, React Native, Python, Elm"
-url: "https://jjdzbb.github.io" # your host, for absolute URL
+url: "https://jjdzbb.github.io" # your host, 黄玄, Huxfor absolute URL
 baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
@@ -13,10 +13,12 @@ future: true
 
 # SNS settings
 RSS: false
-ins_username: Yun
-github_username: Hurricane
+weibo_username: huxpro
+zhihu_username: huxpro
+github_username: huxpro
+twitter_username: huxpro
 #facebook_username:  huxpro
-linkedin_username:  YAOYUN ZHANG 
+#linkedin_username:  firstname-lastname-idxxxx
 
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
@@ -87,4 +89,14 @@ service-worker: true
 page-mathjax: false
 
 # Friends
-
+friends:
+  [
+    { title: "乱序（Midare）", href: "http://mida.re/" },
+    { title: "Ebn Zhang", href: "https://ebnbin.dev/" },
+    { title: "Kun Qian", href: "http://kunq.me" },
+    { title: "Sherry Woo", href: "https://sherrywoo.me/" },
+    { title: "SmdCn", href: "http://blog.smdcn.net" },
+    { title: "JiyinYiyong", href: "http://tiye.me/" },
+    { title: "DHong Say", href: "http://dhong.co" },
+    { title: "尹峰以为", href: "http://ingf.github.io/" },
+  ]
