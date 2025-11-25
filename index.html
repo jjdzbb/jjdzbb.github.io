@@ -72,9 +72,63 @@
         }
         
         .content-wrapper { position: relative; z-index: 1; }
+        
+        /* 导航栏样式 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #000;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900 antialiased relative overflow-x-hidden">
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="max-w-6xl mx-auto px-4 md:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="text-xl font-bold text-gray-900">Yaoyun Zhang</a>
+                <div class="flex items-center gap-6 md:gap-8">
+                    <a href="index.html" class="nav-link active text-gray-700 hover:text-black font-medium">Home</a>
+                    <a href="guestbook.html" class="nav-link text-gray-700 hover:text-black font-medium">Guestbook</a>
+                    <a href="diary.html" class="nav-link text-gray-700 hover:text-black font-medium">Diary</a>
+                </div>
+            </div>
+        </div>
+    </nav>
     
     <canvas id="three-canvas"></canvas>
 
@@ -88,7 +142,7 @@
     </div>
     
     <div class="content-wrapper">
-        <section class="min-h-screen flex items-center justify-start section-padding px-4 md:px-20">
+        <section class="min-h-screen flex items-center justify-start section-padding px-4 md:px-20 pt-16">
             <div class="text-left max-w-3xl">
                 <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tight leading-tight">
                     Yaoyun <br/>(Grace) Zhang
@@ -352,6 +406,27 @@
                 // 更好的方法是修改 marginTop
                 shape.style.transform = `translateY(${scrollY * speed}px)`;
             });
+        });
+        
+        // === 3. 导航栏滚动效果 ===
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // === 4. 当前页面导航高亮 ===
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
         });
     </script>
 </body>
