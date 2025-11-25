@@ -1,41 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.J. - Resume</title>
+    <title>Yaoyun (Grace) Zhang - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        .section-padding {
-            padding: 5rem 0;
-        }
-        
-        @media (max-width: 768px) {
-            .section-padding {
-                padding: 3rem 0;
-            }
-        }
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .section-padding { padding: 5rem 0; }
         
         .timeline-item {
             position: relative;
             padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid #e5e7eb;
         }
-        
-        .timeline-item::before {
-            content: '';
+        .timeline-item:last-child { border-left: none; }
+        .timeline-dot {
             position: absolute;
-            left: 0;
+            left: -7px;
             top: 0.5rem;
             width: 12px;
             height: 12px;
@@ -44,259 +31,188 @@
             border: 2px solid #fff;
         }
         
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 1.5rem;
-            width: 2px;
-            height: calc(100% + 1rem);
-            background-color: #e5e7eb;
-        }
-        
-        .timeline-item:last-child::after {
-            display: none;
-        }
-        
-        .avatar-placeholder {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border: 3px solid #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-        }
-        
-        @media (max-width: 768px) {
-            .avatar-placeholder {
-                width: 150px;
-                height: 150px;
-            }
-        }
-        
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-primary {
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: #000;
-            color: #fff;
-        }
-        
-        .btn-secondary {
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #000;
-            color: #fff;
-        }
+        .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
 <body class="bg-white text-gray-900 antialiased">
     
-    <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center section-padding px-4">
         <div class="text-center max-w-4xl mx-auto">
-            <h1 class="text-6xl md:text-8xl font-light mb-6 tracking-tight">
-                J.J.
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                Yaoyun (Grace) Zhang
             </h1>
-            <p class="text-lg md:text-xl text-gray-600 mb-12 font-light">
-                University Student & Developer based in Canada
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 font-light">
+                Computer Science Student @ McMaster University | Full Stack Developer
+            </p>
+            <p class="text-gray-500 mb-12 max-w-2xl mx-auto">
+                Passionate about building efficient software solutions, from embedded systems to modern web applications.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#contact" class="btn-primary px-8 py-3 border-2 border-black text-black font-medium inline-block">
-                    Download Resume
-                </a>
-                <a href="#contact" class="btn-secondary px-8 py-3 border-2 border-gray-400 text-gray-700 font-medium inline-block">
+                <a href="mailto:jjdzbb0826@gmail.com" class="px-8 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 transition">
                     Contact Me
                 </a>
+                <a href="https://github.com/jjdzbb" target="_blank" class="px-8 py-3 border-2 border-gray-200 text-gray-700 font-medium rounded hover:border-black transition">
+                    View GitHub
+                </a>
             </div>
         </div>
     </section>
     
-    <!-- About Me Section -->
-    <section id="about" class="section-padding px-4 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-light mb-12 text-center">About Me</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-4 text-gray-700 leading-relaxed">
-                    <p class="text-lg">
-                        I am a dedicated university student passionate about software development and technology. 
-                        Currently pursuing my studies in Canada, I combine academic excellence with hands-on 
-                        programming experience.
-                    </p>
-                    <p class="text-lg">
-                        My interests span across web development, software engineering, and emerging technologies. 
-                        I enjoy building clean, efficient solutions and continuously learning new skills to stay 
-                        at the forefront of the tech industry.
-                    </p>
-                    <p class="text-lg">
-                        When I'm not coding, I enjoy exploring new technologies, contributing to open-source 
-                        projects, and collaborating with fellow developers.
-                    </p>
-                </div>
-                <div class="flex justify-center md:justify-end">
-                    <div class="avatar-placeholder">
-                        <i class="fas fa-user text-6xl text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Education Section -->
-    <section id="education" class="section-padding px-4">
+    <section id="experience" class="section-padding px-4 bg-gray-50">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-light mb-12 text-center">Education</h2>
-            <div class="space-y-8">
-                <div class="timeline-item">
-                    <div class="mb-2">
-                        <span class="text-sm text-gray-500 font-medium">2022 - Present</span>
-                    </div>
-                    <h3 class="text-2xl font-medium mb-2">McMaster University</h3>
-                    <p class="text-gray-600 text-lg mb-1">Bachelor of Engineering</p>
-                    <p class="text-gray-500">Hamilton, Ontario, Canada</p>
-                </div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Professional Experience</h2>
+            <div class="space-y-2">
                 
                 <div class="timeline-item">
-                    <div class="mb-2">
-                        <span class="text-sm text-gray-500 font-medium">2018 - 2022</span>
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row justify-between mb-2">
+                        <h3 class="text-xl font-bold">Developer Intern</h3>
+                        <span class="text-sm text-gray-500 font-medium">Jul 2023 – Aug 2023</span>
                     </div>
-                    <h3 class="text-2xl font-medium mb-2">High School Diploma</h3>
-                    <p class="text-gray-600 text-lg mb-1">Secondary Education</p>
-                    <p class="text-gray-500">Canada</p>
+                    <h4 class="text-lg text-gray-700 mb-2">CITIC Bank | Beijing, China</h4>
+                    <ul class="list-disc list-outside ml-4 text-gray-600 space-y-2">
+                        <li>Worked with Credit & Compliance teams to standardize internal reporting protocols.</li>
+                        <li>Automated data reconciliation using Python scripts, reducing manual work from <strong>5 hours/week to under 2 hours</strong>.</li>
+                        <li>Wrote Bash/Python scripts on Crontab to pull transaction records from Oracle to risk dashboards.</li>
+                        <li>Participated in UAT for Kafka streaming setup, monitoring consumer lag and testing edge cases.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row justify-between mb-2">
+                        <h3 class="text-xl font-bold">Developer Intern & Technical Instructor</h3>
+                        <span class="text-sm text-gray-500 font-medium">May 2024 – Aug 2024</span>
+                    </div>
+                    <h4 class="text-lg text-gray-700 mb-2">Sichuan Zhongce Zhibo Info Tech | Chengdu, China</h4>
+                    <ul class="list-disc list-outside ml-4 text-gray-600 space-y-2">
+                        <li>Taught 25+ high school students to build AI object recognition projects using K210 vision chips & Python.</li>
+                        <li>Developed firmware for a smart weighing system using STM32F103 and UCOSII RTOS.</li>
+                        <li>Achieved weighing accuracy of ~1-2 grams through custom calibration routines.</li>
+                        <li>Designed a 12-week curriculum covering Embedded Systems, UART/SPI protocols, and debugging.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-padding px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Featured Projects</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="project-card bg-white border border-gray-200 p-8 rounded-lg">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-gamepad text-3xl text-gray-700"></i>
+                        <span class="text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">Sept 2024 - Dec 2024</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Parkinson's Disease Early Detection Game</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        A browser-based assessment tool designed to detect tremor patterns and reaction times. Built interface accessibility and ensured responsiveness across devices.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full">Vue.js</span>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full">Elm</span>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full">HTML/CSS</span>
+                    </div>
+                </div>
+                
+                <div class="project-card bg-white border border-gray-200 p-8 rounded-lg">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-microchip text-3xl text-gray-700"></i>
+                        <span class="text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">Sept 2023 - Dec 2023</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Intelligent Weighing System</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        An embedded system managing sensor data with concurrent tasks. Integrated TensorFlow Lite for voice-assisted object recognition and SPI LCD display.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">C/C++</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">TensorFlow Lite</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">UCOSII</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding px-4 bg-black text-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Technical Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-gray-400">Languages</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>C / C++</li>
+                        <li>TypeScript / JS</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-gray-400">Frameworks</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>React & Vue.js</li>
+                        <li>Spring Boot</li>
+                        <li>Node.js</li>
+                        <li>MyBatis</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-gray-400">Data & DB</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>MySQL / Oracle</li>
+                        <li>Redis</li>
+                        <li>Power BI</li>
+                        <li>Databricks</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-gray-400">Tools</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Git & Docker</li>
+                        <li>Kafka / RabbitMQ</li>
+                        <li>Linux / Bash</li>
+                        <li>Nginx</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- Projects Section -->
-    <section id="projects" class="section-padding px-4 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-light mb-12 text-center">Projects</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Project 1 -->
-                <div class="project-card bg-white border-2 border-gray-200 p-6">
-                    <div class="mb-4">
-                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-code text-xl text-gray-600"></i>
-                        </div>
-                        <h3 class="text-xl font-medium mb-2">Web Application</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            A modern web application built with React and Node.js, featuring 
-                            responsive design and real-time data processing capabilities.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">React</span>
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">Node.js</span>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="project-card bg-white border-2 border-gray-200 p-6">
-                    <div class="mb-4">
-                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-mobile-alt text-xl text-gray-600"></i>
-                        </div>
-                        <h3 class="text-xl font-medium mb-2">Mobile App</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Cross-platform mobile application developed using Flutter, 
-                            providing seamless user experience across iOS and Android devices.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">Flutter</span>
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">Dart</span>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card bg-white border-2 border-gray-200 p-6">
-                    <div class="mb-4">
-                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-database text-xl text-gray-600"></i>
-                        </div>
-                        <h3 class="text-xl font-medium mb-2">Data Analysis Tool</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Python-based data analysis platform with machine learning integration, 
-                            designed for processing and visualizing complex datasets.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">Python</span>
-                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">ML</span>
-                    </div>
-                </div>
-                
+    <section id="education" class="section-padding px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Education</h2>
+            <div class="inline-block text-left bg-gray-50 p-8 rounded-lg border border-gray-200">
+                <h3 class="text-2xl font-bold mb-2">McMaster University</h3>
+                <p class="text-gray-700 text-lg mb-2">Bachelor of Science in Computer Science</p>
+                <p class="text-gray-500 mb-4">Hamilton, ON | GPA: 3.7/4.0</p>
+                <p class="text-gray-500 text-sm">Faculty of Engineering</p>
             </div>
         </div>
     </section>
-    
-    <!-- Footer -->
-    <footer id="contact" class="bg-black text-white py-12 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-gray-400 text-sm">
-                    <p>&copy; 2024 J.J. All rights reserved.</p>
-                </div>
-                <div class="flex gap-6">
-                    <a href="https://github.com/jjdzbb" target="_blank" rel="noopener noreferrer" 
-                       class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="fab fa-github text-2xl"></i>
-                    </a>
-                    <a href="mailto:your.email@example.com" 
-                       class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="fas fa-envelope text-2xl"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" 
-                       class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="fab fa-linkedin text-2xl"></i>
-                    </a>
-                </div>
+
+    <footer id="contact" class="bg-white border-t border-gray-200 py-12 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-gray-500 text-sm">
+                <p>&copy; 2025 Yaoyun Zhang. All rights reserved.</p>
+            </div>
+            <div class="flex gap-8">
+                <a href="https://github.com/jjdzbb" target="_blank" class="text-gray-400 hover:text-black transition text-2xl">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:jjdzbb0826@gmail.com" class="text-gray-400 hover:text-black transition text-2xl">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="tel:4169302850" class="text-gray-400 hover:text-black transition text-2xl">
+                    <i class="fas fa-phone"></i>
+                </a>
             </div>
         </div>
     </footer>
-    
-    <script>
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Download Resume button functionality (placeholder)
-        document.querySelectorAll('.btn-primary').forEach(btn => {
-            if (btn.textContent.includes('Download Resume')) {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // Replace with actual resume download link
-                    alert('Resume download functionality - Add your resume PDF link here');
-                });
-            }
-        });
-    </script>
+
 </body>
 </html>
