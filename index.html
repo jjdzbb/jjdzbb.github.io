@@ -9,35 +9,42 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .section-padding { padding: 5rem 0; }
         
-        html {
-            scroll-behavior: smooth;
+        /* 视差背景元素样式 */
+        .parallax-shape {
+            position: absolute;
+            z-index: -5; /* 在文字后面，但可能在 3D 背景前面 */
+            opacity: 0.4;
+            pointer-events: none; /* 确保鼠标能穿透点击文字 */
+            transition: transform 0.1s linear; /* 平滑滚动 */
         }
-        
-        .section-padding {
-            padding: 5rem 0;
+
+        /* 漂浮动画 Keyframes */
+        @keyframes float-slow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
-        
-        @media (max-width: 768px) {
-            .section-padding {
-                padding: 3rem 0;
-            }
+        @keyframes float-fast {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
-        
+
+        .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+        .animate-float-fast { animation: float-fast 4s ease-in-out infinite; }
+
+        /* 时间轴样式 */
         .timeline-item {
             position: relative;
             padding-left: 2rem;
             padding-bottom: 2rem;
             border-left: 2px solid #e5e7eb;
         }
-        
-        .timeline-item:last-child {
-            border-left: none;
-        }
-        
+        .timeline-item:last-child { border-left: none; }
         .timeline-dot {
             position: absolute;
             left: -7px;
@@ -49,72 +56,65 @@
             border: 2px solid #fff;
         }
         
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* 背景用的 WebGL canvas（继续复用原来的 id） */
-        #particles-canvas {
+        .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+
+        /* 3D Canvas 样式 */
+        #three-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -10;
-            opacity: 0.6;          /* 可以再调深一点/浅一点 */
+            z-index: -10; /* 最底层 */
+            opacity: 1; 
             pointer-events: none;
         }
         
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-        }
+        .content-wrapper { position: relative; z-index: 1; }
     </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="bg-white text-gray-900 antialiased relative overflow-x-hidden">
     
-    <!-- Three.js WebGL 背景 Canvas -->
-    <canvas id="particles-canvas"></canvas>
+    <canvas id="three-canvas"></canvas>
+
+    <div id="parallax-container" class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-5">
+        <div class="parallax-shape bg-gray-100 rounded-full w-64 h-64 top-20 -left-20 animate-float-slow" data-speed="0.2"></div>
+        <div class="parallax-shape text-gray-100 text-9xl top-[40vh] right-[5%] font-bold animate-float-fast" data-speed="0.5">
+            { }
+        </div>
+        <div class="parallax-shape border-4 border-gray-100 w-32 h-32 top-[80vh] left-[10%] rotate-45 animate-float-slow" data-speed="0.1"></div>
+        <div class="parallax-shape bg-blue-50 rounded-full w-96 h-96 top-[150vh] -right-20 opacity-30 animate-float-slow" data-speed="0.3"></div>
+    </div>
     
     <div class="content-wrapper">
-        <!-- Hero Section -->
-        <section class="min-h-screen flex items-center justify-center section-padding px-4">
-            <div class="text-center max-w-4xl mx-auto">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                    Yaoyun (Grace) Zhang
+        <section class="min-h-screen flex items-center justify-start section-padding px-4 md:px-20">
+            <div class="text-left max-w-3xl">
+                <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tight leading-tight">
+                    Yaoyun <br/>(Grace) Zhang
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-600 mb-8 font-light">
-                    Computer Science Student @ McMaster University 
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 font-light max-w-xl">
+                    Computer Science Student @ McMaster University | Full Stack Developer
                 </p>
-                <p class="text-gray-500 mb-12 max-w-2xl mx-auto">
+                <p class="text-gray-500 mb-12 max-w-xl">
                     Passionate about building efficient software solutions, from embedded systems to modern web applications.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="YaoyunZhang.pdf" target="_blank" class="px-8 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 transition flex items-center gap-2">
-                        <i class="fas fa-download"></i> Check the Resume
+                <div class="flex flex-col sm:flex-row gap-4 justify-start items-center sm:items-start">
+                    <a href="YaoyunZhang.pdf" target="_blank" class="px-8 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 transition flex items-center gap-2 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-download"></i> Resume
                     </a>
-                    <a href="mailto:jjdzbb0826@gmail.com" class="px-8 py-3 border-2 border-gray-200 text-gray-700 font-medium rounded hover:border-black transition">
-                        Contact Me
-                    </a>
-                    <a href="https://github.com/jjdzbb" target="_blank" rel="noopener noreferrer" class="px-8 py-3 border-2 border-gray-200 text-gray-700 font-medium rounded hover:border-black transition flex items-center gap-2">
+                    <a href="https://github.com/jjdzbb" target="_blank" class="px-8 py-3 border-2 border-gray-200 text-gray-700 font-medium rounded hover:border-black transition flex items-center gap-2">
                         <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
             </div>
         </section>
         
-        <!-- Experience Section -->
-        <section id="experience" class="section-padding px-4 bg-gray-50">
+        <section id="experience" class="section-padding px-4 bg-white/80 backdrop-blur-sm">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Professional Experience</h2>
                 <div class="space-y-8">
-                    
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="flex flex-col md:flex-row justify-between mb-2">
@@ -128,7 +128,6 @@
                             <li>Achieved weighing accuracy of 1-2g via custom calibration.</li>
                         </ul>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="flex flex-col md:flex-row justify-between mb-2">
@@ -142,63 +141,62 @@
                             <li>Participated in UAT for Kafka streaming setup.</li>
                         </ul>
                     </div>
-                    
                 </div>
             </div>
         </section>
         
-        <!-- Projects Section -->
         <section id="projects" class="section-padding px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Featured Projects</h2>
                 <div class="grid md:grid-cols-2 gap-8">
-                    
-                    <div class="project-card bg-white border border-gray-200 p-8 rounded-lg">
-                        <div class="flex justify-between items-start mb-4">
-                            <i class="fas fa-gamepad text-3xl text-gray-700"></i>
-                            <span class="text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">Sept 2024 - Dec 2024</span>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">Parkinson's Disease Early Detection Game</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
-                            Browser-based tool to detect tremor patterns. Built accessible interfaces.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Vue.js</span>
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Elm</span>
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">HTML</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card bg-white border border-gray-200 p-8 rounded-lg">
-                        <div class="flex justify-between items-start mb-4">
-                            <i class="fas fa-microchip text-3xl text-gray-700"></i>
-                            <span class="text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">Sept 2023 - Dec 2023</span>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">Intelligent Weighing System</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
-                            Embedded system with voice recognition and SPI LCD display.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">C/C++</span>
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">TensorFlow Lite</span>
-                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">UCOSII</span>
+                    <div class="project-card bg-white border border-gray-200 p-8 rounded-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-blue-50 rounded-bl-full -mr-4 -mt-4 z-0"></div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <i class="fas fa-gamepad text-3xl text-gray-800"></i>
+                                <span class="text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">Sept 2024</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Parkinson's Disease Detection Game</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Browser-based tool to detect tremor patterns. Built accessible interfaces using Elm and Vue.js.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Vue.js</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Elm</span>
+                            </div>
                         </div>
                     </div>
-                    
+                    <div class="project-card bg-white border border-gray-200 p-8 rounded-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-gray-100 rounded-bl-full -mr-4 -mt-4 z-0"></div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <i class="fas fa-microchip text-3xl text-gray-800"></i>
+                                <span class="text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">Dec 2023</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Intelligent Weighing System</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Embedded system with voice recognition and SPI LCD display.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">C/C++</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">TensorFlow</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         
-        <!-- Skills Section -->
-        <section class="section-padding px-4 bg-black text-white">
-            <div class="max-w-4xl mx-auto">
+        <section class="section-padding px-4 bg-black text-white relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+            
+            <div class="max-w-4xl mx-auto relative z-10">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Technical Skills</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div>
                         <h4 class="text-lg font-bold mb-4 text-gray-400">Languages</h4>
                         <ul class="space-y-2 text-gray-300">
-                            <li>Python</li>
-                            <li>Java</li>
+                            <li>Python, Java</li>
                             <li>C / C++</li>
                             <li>TypeScript</li>
                         </ul>
@@ -206,8 +204,7 @@
                     <div>
                         <h4 class="text-lg font-bold mb-4 text-gray-400">Frameworks</h4>
                         <ul class="space-y-2 text-gray-300">
-                            <li>React</li>
-                            <li>Vue.js</li>
+                            <li>React, Vue.js</li>
                             <li>Spring Boot</li>
                             <li>Node.js</li>
                         </ul>
@@ -215,8 +212,7 @@
                     <div>
                         <h4 class="text-lg font-bold mb-4 text-gray-400">Tools</h4>
                         <ul class="space-y-2 text-gray-300">
-                            <li>Git</li>
-                            <li>Docker</li>
+                            <li>Git, Docker</li>
                             <li>Kafka</li>
                             <li>Linux / Bash</li>
                         </ul>
@@ -225,146 +221,138 @@
             </div>
         </section>
         
-        <!-- Footer -->
         <footer id="contact" class="bg-white border-t border-gray-200 py-12 px-4">
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-gray-500 text-sm">
                     <p>&copy; 2025 Yaoyun Zhang. All rights reserved.</p>
                 </div>
                 <div class="flex gap-8">
-                    <a href="https://github.com/jjdzbb" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-black transition text-2xl">
-                        <i class="fab fa-github"></i>
-                    </a>
                     <a href="mailto:jjdzbb0826@gmail.com" class="text-gray-400 hover:text-black transition text-2xl">
                         <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://github.com/jjdzbb" target="_blank" class="text-gray-400 hover:text-black transition text-2xl">
+                        <i class="fab fa-github"></i>
                     </a>
                 </div>
             </div>
         </footer>
     </div>
     
-    <!-- 引入 Three.js -->
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-    
     <script>
-        // Three.js 3D 背景（复用 id="particles-canvas" 的 canvas）
+        // === 1. Three.js: 右上角装饰球体 ===
         (function () {
-            const canvas = document.getElementById('particles-canvas');
-
+            const canvas = document.getElementById('three-canvas');
             const scene = new THREE.Scene();
 
-            const camera = new THREE.PerspectiveCamera(
-                60,
-                window.innerWidth / window.innerHeight,
-                0.1,
-                1000
-            );
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.set(0, 0, 40);
 
-            const renderer = new THREE.WebGLRenderer({
-                canvas: canvas,
-                antialias: true,
-                alpha: true  // 允许与页面白色背景叠加
-            });
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
             // 灯光
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambientLight);
-
-            const pointLight = new THREE.PointLight(0x88ccff, 1.2);
-            pointLight.position.set(20, 30, 40);
+            const pointLight = new THREE.PointLight(0x6366f1, 1.5); // Indigo light
+            pointLight.position.set(20, 20, 20);
             scene.add(pointLight);
 
-            // 中间能量球
-            const coreGeometry = new THREE.IcosahedronGeometry(10, 1);
-            const coreMaterial = new THREE.MeshStandardMaterial({
-                color: 0x00ffff,
-                metalness: 0.4,
-                roughness: 0.15
+            // 核心球体 - 颜色改为深蓝/靛蓝
+            const coreGeometry = new THREE.IcosahedronGeometry(8, 1);
+            const coreMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x4338ca, // Indigo-700
+                metalness: 0.6, 
+                roughness: 0.2 
             });
             const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
+            
+            // 关键：将位置移动到右上角 (X正轴是右, Y正轴是上)
+            // 根据屏幕比例大约估算的位置
+            coreMesh.position.set(18, 12, 0); 
             scene.add(coreMesh);
 
-            // 外层 wireframe
-            const wireGeometry = new THREE.IcosahedronGeometry(11.2, 2);
-            const wireMaterial = new THREE.MeshBasicMaterial({
-                color: 0x66ffcc,
-                wireframe: true,
-                transparent: true,
-                opacity: 0.45
+            // 线框 - 颜色改为浅蓝
+            const wireGeometry = new THREE.IcosahedronGeometry(9, 2);
+            const wireMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x818cf8, // Indigo-400
+                wireframe: true, 
+                transparent: true, 
+                opacity: 0.3 
             });
             const wireMesh = new THREE.Mesh(wireGeometry, wireMaterial);
+            wireMesh.position.set(18, 12, 0); // 跟随核心
             scene.add(wireMesh);
 
-            // 星空粒子
+            // 星星 - 全屏分布
             const starsGeometry = new THREE.BufferGeometry();
-            const starCount = 1800;
+            const starCount = 1000;
             const positions = new Float32Array(starCount * 3);
-
             for (let i = 0; i < starCount * 3; i += 3) {
-                const radius = 120 + Math.random() * 80;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos((Math.random() * 2) - 1);
-
-                positions[i]     = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-                positions[i + 2] = radius * Math.cos(phi);
+                positions[i] = (Math.random() - 0.5) * 200;
+                positions[i + 1] = (Math.random() - 0.5) * 120;
+                positions[i + 2] = (Math.random() - 0.5) * 100;
             }
-
             starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            const starsMaterial = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 0.9,
-                sizeAttenuation: true,
-                transparent: true,
-                opacity: 0.9
-            });
-
+            const starsMaterial = new THREE.PointsMaterial({ color: 0x94a3b8, size: 0.5, transparent: true, opacity: 0.6 });
             const stars = new THREE.Points(starsGeometry, starsMaterial);
             scene.add(stars);
 
-            const clock = new THREE.Clock();
-
             function animate() {
                 requestAnimationFrame(animate);
-
-                const elapsed = clock.getElapsedTime();
-
-                // 旋转效果
-                coreMesh.rotation.x += 0.003;
-                coreMesh.rotation.y += 0.004;
-
-                wireMesh.rotation.x -= 0.002;
-                wireMesh.rotation.y += 0.0015;
-
-                stars.rotation.y += 0.0006;
-                stars.rotation.x -= 0.0003;
-
-                // 轻微呼吸缩放
-                const scale = 1 + Math.sin(elapsed * 0.7) * 0.06;
+                
+                // 缓慢自转
+                coreMesh.rotation.y += 0.005;
+                coreMesh.rotation.x += 0.002;
+                wireMesh.rotation.y -= 0.002;
+                
+                // 呼吸效果
+                const time = Date.now() * 0.001;
+                const scale = 1 + Math.sin(time) * 0.05;
                 coreMesh.scale.set(scale, scale, scale);
-                wireMesh.scale.set(scale * 1.02, scale * 1.02, scale * 1.02);
 
                 renderer.render(scene, camera);
             }
-
             animate();
 
-            // 自适应窗口大小
-            function onWindowResize() {
-                const w = window.innerWidth;
-                const h = window.innerHeight;
-                camera.aspect = w / h;
+            // 窗口自适应
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
-                renderer.setSize(w, h);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                // 响应式位置调整：如果是手机屏幕，把球移到上方中间，而不是右上角
+                if(window.innerWidth < 768) {
+                    coreMesh.position.set(0, 15, -10);
+                    wireMesh.position.set(0, 15, -10);
+                } else {
+                    coreMesh.position.set(18, 12, 0);
+                    wireMesh.position.set(18, 12, 0);
+                }
+            });
+            // 初始化检测一次位置
+            if(window.innerWidth < 768) {
+                coreMesh.position.set(0, 15, -10);
+                wireMesh.position.set(0, 15, -10);
             }
-
-            window.addEventListener('resize', onWindowResize);
         })();
+
+        // === 2. 视差滚动逻辑 (Parallax) ===
+        document.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const shapes = document.querySelectorAll('.parallax-shape');
+            
+            shapes.forEach(shape => {
+                const speed = shape.getAttribute('data-speed');
+                // 根据滚动距离 * 速度系数来移动元素
+                // translateY 结合原有的 CSS 动画 transform 可能会冲突，
+                // 所以我们这里只改变 'top' 属性的偏移，或者使用 transform 的叠加
+                // 简单起见，这里直接修改 transform 会覆盖 CSS 动画。
+                // 更好的方法是修改 marginTop
+                shape.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
     </script>
 </body>
 </html>
