@@ -58,6 +58,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
+        /* 背景用的 WebGL canvas（继续复用原来的 id） */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -65,7 +66,7 @@
             width: 100%;
             height: 100%;
             z-index: -10;
-            opacity: 0.4;
+            opacity: 0.6;          /* 可以再调深一点/浅一点 */
             pointer-events: none;
         }
         
@@ -77,7 +78,7 @@
 </head>
 <body class="bg-white text-gray-900 antialiased">
     
-    <!-- Canvas Particle Network Background -->
+    <!-- Three.js WebGL 背景 Canvas -->
     <canvas id="particles-canvas"></canvas>
     
     <div class="content-wrapper">
@@ -88,7 +89,7 @@
                     Yaoyun (Grace) Zhang
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-600 mb-8 font-light">
-                    Computer Science Student @ McMaster University | Full Stack Developer
+                    Computer Science Student @ McMaster University 
                 </p>
                 <p class="text-gray-500 mb-12 max-w-2xl mx-auto">
                     Passionate about building efficient software solutions, from embedded systems to modern web applications.
@@ -96,7 +97,7 @@
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="YaoyunZhang.pdf" target="_blank" class="px-8 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 transition flex items-center gap-2">
-                        <i class="fas fa-download"></i> Download Resume
+                        <i class="fas fa-download"></i> Check the Resume
                     </a>
                     <a href="mailto:jjdzbb0826@gmail.com" class="px-8 py-3 border-2 border-gray-200 text-gray-700 font-medium rounded hover:border-black transition">
                         Contact Me
@@ -242,110 +243,127 @@
         </footer>
     </div>
     
+    <!-- 引入 Three.js -->
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    
     <script>
-        // Particle Network Animation
-        (function() {
+        // Three.js 3D 背景（复用 id="particles-canvas" 的 canvas）
+        (function () {
             const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            
-            let particles = [];
-            const particleCount = 50;
-            const connectionDistance = 150;
-            const particleSpeed = 0.5;
-            
-            // Set canvas size
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            
-            // Particle class
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.vx = (Math.random() - 0.5) * particleSpeed;
-                    this.vy = (Math.random() - 0.5) * particleSpeed;
-                    this.radius = 2;
-                }
-                
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    
-                    // Wrap around edges
-                    if (this.x < 0) this.x = canvas.width;
-                    if (this.x > canvas.width) this.x = 0;
-                    if (this.y < 0) this.y = canvas.height;
-                    if (this.y > canvas.height) this.y = 0;
-                }
-                
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = '#6b7280';
-                    ctx.fill();
-                }
-            }
-            
-            // Initialize particles
-            function initParticles() {
-                particles = [];
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-            
-            initParticles();
-            
-            // Draw connections
-            function drawConnections() {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < connectionDistance) {
-                            const opacity = 1 - (distance / connectionDistance);
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(107, 114, 128, ${opacity * 0.3})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-            
-            // Animation loop
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Update and draw particles
-                particles.forEach(particle => {
-                    particle.update();
-                    particle.draw();
-                });
-                
-                // Draw connections
-                drawConnections();
-                
-                requestAnimationFrame(animate);
-            }
-            
-            // Handle canvas resize
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                initParticles();
+
+            const scene = new THREE.Scene();
+
+            const camera = new THREE.PerspectiveCamera(
+                60,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
+            camera.position.set(0, 0, 40);
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                antialias: true,
+                alpha: true  // 允许与页面白色背景叠加
             });
-            
-            // Start animation
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // 灯光
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0x88ccff, 1.2);
+            pointLight.position.set(20, 30, 40);
+            scene.add(pointLight);
+
+            // 中间能量球
+            const coreGeometry = new THREE.IcosahedronGeometry(10, 1);
+            const coreMaterial = new THREE.MeshStandardMaterial({
+                color: 0x00ffff,
+                metalness: 0.4,
+                roughness: 0.15
+            });
+            const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
+            scene.add(coreMesh);
+
+            // 外层 wireframe
+            const wireGeometry = new THREE.IcosahedronGeometry(11.2, 2);
+            const wireMaterial = new THREE.MeshBasicMaterial({
+                color: 0x66ffcc,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.45
+            });
+            const wireMesh = new THREE.Mesh(wireGeometry, wireMaterial);
+            scene.add(wireMesh);
+
+            // 星空粒子
+            const starsGeometry = new THREE.BufferGeometry();
+            const starCount = 1800;
+            const positions = new Float32Array(starCount * 3);
+
+            for (let i = 0; i < starCount * 3; i += 3) {
+                const radius = 120 + Math.random() * 80;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+
+                positions[i]     = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i + 2] = radius * Math.cos(phi);
+            }
+
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.9,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.9
+            });
+
+            const stars = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(stars);
+
+            const clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const elapsed = clock.getElapsedTime();
+
+                // 旋转效果
+                coreMesh.rotation.x += 0.003;
+                coreMesh.rotation.y += 0.004;
+
+                wireMesh.rotation.x -= 0.002;
+                wireMesh.rotation.y += 0.0015;
+
+                stars.rotation.y += 0.0006;
+                stars.rotation.x -= 0.0003;
+
+                // 轻微呼吸缩放
+                const scale = 1 + Math.sin(elapsed * 0.7) * 0.06;
+                coreMesh.scale.set(scale, scale, scale);
+                wireMesh.scale.set(scale * 1.02, scale * 1.02, scale * 1.02);
+
+                renderer.render(scene, camera);
+            }
+
             animate();
+
+            // 自适应窗口大小
+            function onWindowResize() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            }
+
+            window.addEventListener('resize', onWindowResize);
         })();
     </script>
 </body>
