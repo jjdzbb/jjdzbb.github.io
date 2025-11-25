@@ -103,7 +103,6 @@
 </head>
 <body class="bg-white text-gray-900 antialiased relative overflow-x-hidden">
     
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="max-w-6xl mx-auto px-4 md:px-8">
             <div class="flex items-center justify-between h-16">
@@ -129,23 +128,35 @@
     </div>
     
     <div class="content-wrapper">
-        <!-- Guestbook Section -->
         <section class="min-h-screen flex items-center justify-center section-padding px-4 md:px-8 pt-24">
             <div class="max-w-4xl mx-auto w-full">
                 <div class="text-center mb-12">
                     <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Guestbook</h1>
                     <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                        Leave a message, share your thoughts, or just say hello!
+                        Leave a message, or just say hello!
                     </p>
                 </div>
                 
                 <div class="giscus-container">
-                    <div id="giscus-container"></div>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="jjdzbb/jjdzbb.github.io"
+                        data-repo-id="R_kgDONu3yIA"
+                        data-category="General"
+                        data-category-id="DIC_kwDONu3yIM4Cy-X_"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="preferred_color_scheme"
+                        data-lang="zh-CN"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
                 </div>
             </div>
         </section>
         
-        <!-- Footer -->
         <footer class="bg-white border-t border-gray-200 py-12 px-4">
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-gray-500 text-sm">
@@ -278,22 +289,5 @@
         });
     </script>
     
-    <!-- Giscus 评论系统 -->
-    <script src="https://giscus.app/client.js"
-        data-repo="jjdzbb/jjdzbb.github.io"
-        data-repo-id=""
-        data-category="Announcements"
-        data-category-id=""
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-    </script>
-</body>
+    </body>
 </html>
-
