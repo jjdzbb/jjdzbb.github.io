@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guestbook - Yaoyun (Grace) Zhang</title>
     <script src="https://cdn.tailwindcss.com"></script>
+	<script>
+    	tailwind.config = {
+        	darkMode: 'class', // 告诉 Tailwind 我们要手动控制深色模式
+    	}
+	</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -101,9 +106,10 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-900 antialiased relative overflow-x-hidden">
-    
-    <nav class="navbar">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="navbar-placeholder"></div>
+    <!-- <nav class="navbar">
         <div class="max-w-6xl mx-auto px-4 md:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="index.html" class="text-xl font-bold text-gray-900">Yaoyun Zhang</a>
@@ -114,7 +120,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
     
     <canvas id="three-canvas"></canvas>
 
@@ -288,6 +294,6 @@
             }
         });
     </script>
-    
+    <script src="js/main.js"></script>
     </body>
 </html>
