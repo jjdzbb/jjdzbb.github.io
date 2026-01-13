@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Strange Magic Particles</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; }
+        /* 用于隐藏摄像头原始画面，我们只需要数据 */
+        #video-input { position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; z-index: -1; }
+        /* 调试信息或UI容器 */
+        #ui-container { position: absolute; top: 10px; left: 10px; color: white; font-family: 'Inter', sans-serif; pointer-events: none; }
+        .loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px; }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+                "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/+esm"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="loading" class="loading">Loading AI Models...</div>
+    <div id="ui-container">
+        <div>Status: <span id="status-text">Initializing...</span></div>
+        <div>Gesture: <span id="gesture-text">None</span></div>
+    </div>
+    
+    <video id="video-input" autoplay playsinline></video>
+
+    <script type="module" src="./js/app.js"></script>
+</body>
+</html>
